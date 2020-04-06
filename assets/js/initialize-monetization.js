@@ -288,6 +288,8 @@
 	 * @return bool
 	 */
 	function monetizationNotInitialized() {
+		console.log("monetizationNotInitialized function ", document.body.classList);
+		console.log(document.body.classList.contains( 'monetization-not-initialized' ));
 		return document.body.classList.contains( 'monetization-not-initialized' );
 	}
 
@@ -298,6 +300,7 @@
 	 * @see https://github.com/js-cookie/js-cookie
 	 */
 	function addBannerDismissClickHandler( cookieName ) {
+console.log("addBannerDismissClickHandler ", cookieName);
 		$( '#js-coil-banner-dismiss' ).on( 'click', function() {
 			if ( ! hasBannerDismissCookie( cookieName ) ) {
 				if ( cookieName === 'ShowCoilPublicMsg' ) {
@@ -318,6 +321,7 @@
 	 * @return bool. True if set to '1', otherwise false.
 	 */
 	function hasBannerDismissCookie( cookieName ) {
+
 		var currentCookie = Cookies.get( cookieName );
 
 		if ( ( typeof( currentCookie ) !== 'undefined' ) ) {
@@ -325,6 +329,9 @@
 				return ( currentCookie === '1' ) ? true : false;
 			}
 		}
+		//currentCookie = 1;
+		console.log("hasBannerDismissCookie is set ", currentCookie );
+
 		return false;
 	}
 
@@ -332,8 +339,9 @@
 	 * Init
 	 */
 	$( document ).ready(function () {
-
+		console.log (coil_params);
 		if ( monetizationNotInitialized() ) {
+			console.log("monetizationNotInitialized ");
 
 			// Hide content entry area if not default selector.
 			if ( ! isMonetizedAndPublic() && ! usingDefaultContentContainer() ) {
@@ -342,13 +350,15 @@
 
 			// Check if browser extension exists.
 			if ( typeof document.monetization !== 'undefined' ) {
-
+				console.log("document.monetization !== 'undefined ");
+				console.log(document.monetization.state);
 				switch ( document.monetization.state ) {
 
 					case 'pending':
 
 						// If the site is missing it's payment pointer ID.
 						if ( isPaymentPointerMissing() ) {
+							console.log("isPaymentPointerMissing ");
 
 							if ( isViewingAdmin() ) {
 
@@ -373,7 +383,7 @@
 
 							// Verify monetization only if we are gating or partially gating content.
 							if ( ! isMonetizedAndPublic() ) {
-
+							console.log("! isMonetizedAndPublic ");
 								// If post is gated then show verification message after excerpt.
 								if ( isSubscribersOnly() ) {
 
@@ -404,7 +414,7 @@
 								}, 5000 );
 
 							} else {
-
+								console.log("show_donation_bar && monetizationNotInitialized() && ! hasBannerDismissCookie");
 								if ( show_donation_bar && monetizationNotInitialized() && ! hasBannerDismissCookie( 'ShowCoilPublicMsg' ) ) {
 									$( 'body' ).append( showBannerMessage( voluntary_donation ) );
 									addBannerDismissClickHandler( 'ShowCoilPublicMsg' );
@@ -419,7 +429,7 @@
 					break;
 
 				case 'stopped':
-
+					console.log("case stopped ", document.body.classList);
 					if ( isSubscribersOnly() || isSplitContent() ) {
 						hideContentExcerpt();
 						hideContentContainer();
@@ -431,14 +441,14 @@
 						// If the payment connection event listeners haven't yet been
 						// initialised, display failure message
 						if ( typeof monetizationStartEventOccurred === 'undefined' ) {
-
+						console.log("typeof monetizationStartEventOccurred === 'undefined'");
 							if ( $( 'p.monetize-msg' ).text() === loading_content ) {
 
 								// Monetization not started and verification failed.
 								showVerificationFailureMessage();
 
 							} else if ( isMonetizedAndPublic() ) {
-
+								console.log("show_donation_bar && ! hasBannerDismissCookie( 'ShowCoilPublicMsg' )");
 								// Content is monetized and public but extension is stopped.
 								if ( show_donation_bar && ! hasBannerDismissCookie( 'ShowCoilPublicMsg' ) ) {
 									$( 'body' ).append( showBannerMessage( voluntary_donation ) );
@@ -554,7 +564,7 @@
 				} else if ( isMonetizedAndPublic() ) {
 
 					// Content is monetized and public but no extension found.
-
+					console.log("show_donation_bar && ! hasBannerDismissCookie( 'ShowCoilPublicMsg' ) ");
 					if ( show_donation_bar && ! hasBannerDismissCookie( 'ShowCoilPublicMsg' ) ) {
 						$( 'body' ).append( showBannerMessage( voluntary_donation ) );
 						addBannerDismissClickHandler( 'ShowCoilPublicMsg' );
