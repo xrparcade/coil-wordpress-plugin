@@ -6,7 +6,7 @@ Tags: coil, content, monetization, payment, interledger, ilp
 Requires at least: 4.9
 Requires PHP: 7.1
 Tested up to: 5.3
-Stable tag: 1.6.0
+Stable tag: 1.7.0
 License: Apache-2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0.txt
 
@@ -77,13 +77,12 @@ If you get stuck, check out our [help center](https://help.coil.com/for-creators
 
 == Screenshots ==
 
-1. Global Settings
-2. Default Content Settings
-3. Excerpt Settings
-4. Gutenberg Editor
+1. Simple setup
+2. Great support 
+3. Exclusive content 
 
 == Changelog ==
 
-= v1.6.0 =
+= v1.7.0 =
 
 First release.
